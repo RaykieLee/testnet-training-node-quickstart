@@ -18,6 +18,13 @@ model2template = {
     "Qwen/Qwen1.5-7B": qwen_template,
     "google/gemma-2b": gemma_template,
     "google/gemma-7b": gemma_template,
+    "Qwen/Qwen2.5-0.5B": qwen_template,
+    "Qwen/Qwen2.5-0.5B-Instruct": qwen_template,
+    "Qwen/Qwen2.5-1.5B": qwen_template,
+    "Qwen/Qwen2.5-1.5B-Instruct": qwen_template,
+    "Qwen/Qwen2.5-3B": qwen_template,
+    "google/gemma-2-2b": gemma_template,
+    "google/gemma-2-9b": gemma_template,
 }
 
 model2size = {
@@ -26,6 +33,13 @@ model2size = {
     "Qwen/Qwen1.5-7B": 7_720_000_000,
     "google/gemma-2b": 2_510_000_000,
     "google/gemma-7b": 8_540_000_000,
+    "Qwen/Qwen2.5-0.5B": 500_000_000,
+    "Qwen/Qwen2.5-0.5B-Instruct": 500_000_000,
+    "Qwen/Qwen2.5-1.5B": 1_500_000_000,
+    "Qwen/Qwen2.5-1.5B-Instruct": 1_500_000_000,
+    "Qwen/Qwen2.5-3B": 3_000_000_000,
+    "google/gemma-2-2b": 2_500_000_000,  # 25亿参数
+    "google/gemma-2-9b": 9_000_000_000,  # 90亿参数
 }
 
 model2base_model = {
@@ -34,4 +48,11 @@ model2base_model = {
     "Qwen/Qwen1.5-7B": "qwen1.5",
     "google/gemma-2b": "gemma",
     "google/gemma-7b": "gemma",
+    "Qwen/Qwen2.5-0.5B": "qwen2.5",
+    "Qwen/Qwen2.5-0.5B-Instruct": "qwen2.5",
+    "Qwen/Qwen2.5-1.5B": "qwen2.5",
+    "Qwen/Qwen2.5-1.5B-Instruct": "qwen2.5",
+    "Qwen/Qwen2.5-3B": "qwen2.5",
+    "google/gemma-2-2b": "gemma",
+    "google/gemma-2-9b": "gemma",
 }
