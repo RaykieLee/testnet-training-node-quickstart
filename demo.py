@@ -98,22 +98,45 @@ def train_lora(
     print("Training Completed.")
 
 
+def print_model_structure(model_id: str):
+    """打印模型结构，帮助找到可用的 target_modules"""
+    from transformers import AutoModelForCausalLM
+    import torch
+    
+    # 加载模型
+    print(f"Loading model {model_id}...")
+    model = AutoModelForCausalLM.from_pretrained(
+        model_id,
+        torch_dtype=torch.float16,
+        device_map="auto"
+    )
+    
+    # 打印所有命名模块
+    print("\nModel structure:")
+    for name, module in model.named_modules():
+        if isinstance(module, torch.nn.Linear):  # 我们通常对线性层感兴趣
+            print(f"Linear Layer: {name} -> Shape: {module.weight.shape}")
+
+
 if __name__ == "__main__":
     # Define training arguments for LoRA fine-tuning
-    training_args = LoraTrainingArguments(
-        num_train_epochs=3,
-        per_device_train_batch_size=2,
-        gradient_accumulation_steps=2,
-        lora_rank=8,
-        lora_alpha=16,
-        lora_dropout=0.05,
-    )
+    # training_args = LoraTrainingArguments(
+    #     num_train_epochs=3,
+    #     per_device_train_batch_size=2,
+    #     gradient_accumulation_steps=2,
+    #     lora_rank=8,
+    #     lora_alpha=16,
+    #     lora_dropout=0.05,
+    # )
 
-    # Set model ID and context length
-    model_id = "Qwen/Qwen1.5-0.5B"
-    context_length = 2048
+    # # Set model ID and context length
+    # model_id = "Qwen/Qwen1.5-0.5B"
+    # context_length = 2048
 
-    # Start LoRA fine-tuning
-    train_lora(
-        model_id=model_id, context_length=context_length, training_args=training_args
-    )
+    # # Start LoRA fine-tuning
+    # train_lora(
+    #     model_id=model_id, context_length=context_length, training_args=training_args
+    # )
+
+    model_id = "microsoft/Phi-3-mini-4k-instruct"  # 或其他模型ID
+    print_model_structure(model_id)
