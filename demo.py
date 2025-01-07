@@ -15,25 +15,12 @@ class LoraTrainingArguments:
     per_device_train_batch_size: int
     gradient_accumulation_steps: int
     num_train_epochs: int
-    lora_rank: int
-    lora_alpha: int
-    lora_dropout: int
 
 
 def train_lora(
-    model_id: str, context_length: int, training_args: LoraTrainingArguments
+    model_id: str, context_length: int, training_args: LoraTrainingArguments, lora_config: LoraConfig
 ):
     assert model_id in model2template, f"model_id {model_id} not supported"
-    lora_config = LoraConfig(
-        r=training_args.lora_rank,
-        target_modules=[
-            "q_proj",
-            "v_proj",
-        ],
-        lora_alpha=training_args.lora_alpha,
-        lora_dropout=training_args.lora_dropout,
-        task_type="CAUSAL_LM",
-    )
 
     # Load model in 4-bit to do qLoRA
     bnb_config = BitsAndBytesConfig(
@@ -98,14 +85,20 @@ def train_lora(
 
 if __name__ == "__main__":
     # Define training arguments for LoRA fine-tuning
-    training_args = LoraTrainingArguments(
-        num_train_epochs=3,
-        per_device_train_batch_size=2,
-        gradient_accumulation_steps=2,
-        lora_rank=8,
+    training_params = {
+        'per_device_train_batch_size': 2,
+        'gradient_accumulation_steps': 2,
+        'num_train_epochs': 3
+    }
+
+    lora_config = LoraConfig(
+        r=8,
         lora_alpha=16,
         lora_dropout=0.05,
+        target_modules=["q_proj", "v_proj"]
     )
+
+    training_args = LoraTrainingArguments(**training_params)
 
     # Set model ID and context length
     model_id = "Qwen/Qwen1.5-0.5B"
@@ -113,5 +106,5 @@ if __name__ == "__main__":
 
     # Start LoRA fine-tuning
     train_lora(
-        model_id=model_id, context_length=context_length, training_args=training_args
+        model_id=model_id, context_length=context_length, training_args=training_args, lora_config=lora_config
     )
