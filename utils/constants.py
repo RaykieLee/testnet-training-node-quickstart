@@ -131,7 +131,7 @@ model2base_model = {
     # "google/gemma-2b": "gemma",
     # "google/gemma-7b": "gemma",
     # "microsoft/Phi-3.5-mini-instruct": "phi",
-    "microsoft/Phi-3-mini-4k-instruct": "phi",
+    "microsoft/Phi-3-mini-4k-instruct": "phi3",
     # "01-ai/Yi-6B": "yi",
     # "HuggingFaceH4/zephyr-7b-beta": "zephyr",
     # "mistralai/Mistral-7B-v0.1": "mistral",
