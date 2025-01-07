@@ -29,6 +29,7 @@ def train_lora(
         target_modules=[
             "q_proj",
             "v_proj",
+            "W_pack",
         ],
         lora_alpha=training_args.lora_alpha,
         lora_dropout=training_args.lora_dropout,
