@@ -28,8 +28,9 @@ def train_lora(
         r=training_args.lora_rank,
         target_modules=[
             "q_proj",
+            "k_proj",
             "v_proj",
-            "W_pack",
+            "dense"
         ],
         lora_alpha=training_args.lora_alpha,
         lora_dropout=training_args.lora_dropout,
