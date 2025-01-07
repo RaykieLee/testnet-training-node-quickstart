@@ -27,7 +27,7 @@ def train_lora(
     lora_config = LoraConfig(
         r=training_args.lora_rank,
         target_modules=[
-            "q_proj",
+            "qkv_proj",
             "o_proj",
         ],
         lora_alpha=training_args.lora_alpha,
