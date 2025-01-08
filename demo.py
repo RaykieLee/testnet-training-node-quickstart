@@ -136,5 +136,5 @@ if __name__ == "__main__":
     #     model_id=model_id, context_length=context_length, training_args=training_args
     # )
 
-    model_id = "microsoft/Phi-3-mini-4k-instruct"  # 或其他模型ID
+    model_id = "microsoft/Phi-3-small-8k-instruct"  # 或其他模型ID
     print_model_structure(model_id)
