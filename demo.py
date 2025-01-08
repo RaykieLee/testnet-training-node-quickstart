@@ -68,6 +68,8 @@ def train_lora(
         quantization_config=bnb_config,
         device_map={"": 0},
         token=os.environ["HF_TOKEN"],
+        trust_remote_code=True,
+        torch_dtype=torch.bfloat16,
     )
 
     # Load dataset
