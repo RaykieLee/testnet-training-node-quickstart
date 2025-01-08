@@ -95,7 +95,6 @@ def train_lora(
         model=model,
         train_dataset=dataset,
         peft_config=lora_config,
-        max_seq_length=context_length,
         tokenizer=tokenizer,
         args=training_config,
         data_collator=SFTDataCollator(
