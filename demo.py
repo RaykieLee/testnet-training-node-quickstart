@@ -82,14 +82,18 @@ def train_lora(
         torch_dtype=torch.bfloat16,
     )
 
-    # Load dataset
+    # 确保模型参数是 bf16
+    for param in model.parameters():
+        if param.dtype == torch.float32:
+            param.data = param.data.to(torch.bfloat16)
+
+    # 创建数据集
     dataset = SFTDataset(
         file="data/demo_data.jsonl",
         tokenizer=tokenizer,
         max_seq_length=context_length,
         template=model2template[model_id],
     )
-
     # Define trainer
     trainer = SFTTrainer(
         model=model,
