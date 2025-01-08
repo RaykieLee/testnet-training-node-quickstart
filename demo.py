@@ -26,9 +26,13 @@ def train_lora(
     assert model_id in model2template, f"model_id {model_id} not supported"
     lora_config = LoraConfig(
         r=training_args.lora_rank,
+        # target_modules=[
+        #     "qkv_proj",
+        #     "o_proj",
+        # ],
         target_modules=[
-            "qkv_proj",
-            "o_proj",
+            "up_proj",
+            "down_proj",
         ],
         lora_alpha=training_args.lora_alpha,
         lora_dropout=training_args.lora_dropout,
