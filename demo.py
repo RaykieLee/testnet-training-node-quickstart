@@ -44,6 +44,7 @@ def train_lora(
         load_in_4bit=True,
         bnb_4bit_quant_type="nf4",
         bnb_4bit_compute_dtype=torch.bfloat16,
+        bnb_4bit_use_double_quant=True,
     )
 
     training_args = SFTConfig(
@@ -52,6 +53,7 @@ def train_lora(
         warmup_steps=100,
         learning_rate=2e-4,
         bf16=True,
+        fp16=False,
         logging_steps=20,
         output_dir="outputs",
         optim="paged_adamw_8bit",
@@ -70,6 +72,8 @@ def train_lora(
         token=os.environ["HF_TOKEN"],
         trust_remote_code=True,
         torch_dtype=torch.bfloat16,
+        use_flash_attention_2=True,
+        attn_implementation="flash_attention_2",
     )
 
     # Load dataset
