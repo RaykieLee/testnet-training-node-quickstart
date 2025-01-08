@@ -37,6 +37,8 @@ def train_lora(
         lora_alpha=training_args.lora_alpha,
         lora_dropout=training_args.lora_dropout,
         task_type="CAUSAL_LM",
+        trust_remote_code=True,
+        torch_dtype=torch.bfloat16,
     )
 
     # Load model in 4-bit to do qLoRA
