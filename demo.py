@@ -37,19 +37,18 @@ def train_lora(
         lora_alpha=training_args.lora_alpha,
         lora_dropout=training_args.lora_dropout,
         task_type="CAUSAL_LM",
-        trust_remote_code=True,
-        torch_dtype=torch.bfloat16,
     )
 
-    # Load model in 4-bit to do qLoRA
+    # 量化配置
     bnb_config = BitsAndBytesConfig(
         load_in_4bit=True,
         bnb_4bit_quant_type="nf4",
         bnb_4bit_compute_dtype=torch.bfloat16,
-        bnb_4bit_use_double_quant=True,
+        bnb_4bit_use_double_quant=False,
     )
 
-    training_args = SFTConfig(
+    # 训练配置
+    training_config = SFTConfig(
         per_device_train_batch_size=training_args.per_device_train_batch_size,
         gradient_accumulation_steps=training_args.gradient_accumulation_steps,
         warmup_steps=100,
@@ -63,6 +62,7 @@ def train_lora(
         num_train_epochs=training_args.num_train_epochs,
         max_seq_length=context_length,
     )
+
     tokenizer = AutoTokenizer.from_pretrained(
         model_id,
         use_fast=True,
@@ -73,9 +73,7 @@ def train_lora(
         device_map={"": 0},
         token=os.environ["HF_TOKEN"],
         trust_remote_code=True,
-        torch_dtype=torch.bfloat16,
-        use_flash_attention_2=True,
-        attn_implementation="flash_attention_2",
+        torch_dtype=torch.bfloat16,  # 这里设置模型的默认数据类型
     )
 
     # Load dataset
@@ -90,7 +88,7 @@ def train_lora(
     trainer = SFTTrainer(
         model=model,
         train_dataset=dataset,
-        args=training_args,
+        args=training_config,
         peft_config=lora_config,
         data_collator=SFTDataCollator(tokenizer, max_seq_length=context_length),
     )
