@@ -63,17 +63,23 @@ def train_lora(
         max_seq_length=context_length,
     )
 
+    # 加载 tokenizer
     tokenizer = AutoTokenizer.from_pretrained(
         model_id,
-        use_fast=True,
+        trust_remote_code=True,
+        token=os.environ.get("HF_TOKEN"),
     )
+    tokenizer.pad_token = tokenizer.eos_token
+    tokenizer.padding_side = "right"
+
+    # 加载模型
     model = AutoModelForCausalLM.from_pretrained(
         model_id,
         quantization_config=bnb_config,
         device_map={"": 0},
-        token=os.environ["HF_TOKEN"],
+        token=os.environ.get("HF_TOKEN"),
         trust_remote_code=True,
-        torch_dtype=torch.bfloat16,  # 这里设置模型的默认数据类型
+        torch_dtype=torch.bfloat16,
     )
 
     # Load dataset
