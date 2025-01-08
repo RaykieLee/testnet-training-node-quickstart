@@ -94,10 +94,14 @@ def train_lora(
     trainer = SFTTrainer(
         model=model,
         train_dataset=dataset,
-        trust_remote_code=True,
-        args=training_config,
         peft_config=lora_config,
-        data_collator=SFTDataCollator(tokenizer, max_seq_length=context_length),
+        max_seq_length=context_length,
+        tokenizer=tokenizer,
+        args=training_config,
+        data_collator=SFTDataCollator(
+            tokenizer=tokenizer,
+            max_length=context_length,
+        ),
     )
 
     # Train model
