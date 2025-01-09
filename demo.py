@@ -26,13 +26,13 @@ def train_lora(
     assert model_id in model2template, f"model_id {model_id} not supported"
     lora_config = LoraConfig(
         r=training_args.lora_rank,
-        # target_modules="all-linear",
-        target_modules=[
-            "qkv_proj",   # 注意力机制的核心
-            "o_proj",     # 注意力输出
-            "up_proj",    # MLP 上投影
-            "down_proj",  # MLP 下投影
-        ],
+        target_modules="all-linear",
+        # target_modules=[
+        #     "qkv_proj",   # 注意力机制的核心
+        #     "o_proj",     # 注意力输出
+        #     "up_proj",    # MLP 上投影
+        #     "down_proj",  # MLP 下投影
+        # ],
         lora_alpha=training_args.lora_alpha,
         lora_dropout=training_args.lora_dropout,
         task_type="CAUSAL_LM",
