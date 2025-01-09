@@ -47,7 +47,7 @@ def train_lora(
         bf16=True,
         logging_steps=20,
         output_dir="outputs",
-        optim="paged_adamw_32bit",
+        optim="paged_adamw_8bit",
         remove_unused_columns=False,
         num_train_epochs=training_args.num_train_epochs,
         max_seq_length=context_length,
