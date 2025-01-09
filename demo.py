@@ -57,6 +57,9 @@ def train_lora(
         remove_unused_columns=False,
         num_train_epochs=training_args.num_train_epochs,
         max_seq_length=context_length,
+        gradient_checkpointing=True,  # 启用梯度检查点
+        group_by_length=True,
+        max_grad_norm=1.0,
     )
     tokenizer = AutoTokenizer.from_pretrained(
         model_id,
