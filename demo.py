@@ -26,10 +26,7 @@ def train_lora(
     assert model_id in model2template, f"model_id {model_id} not supported"
     lora_config = LoraConfig(
         r=training_args.lora_rank,
-        target_modules=[
-            "qkv_proj",
-            "o_proj",
-        ],
+        target_modules=["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
         lora_alpha=training_args.lora_alpha,
         lora_dropout=training_args.lora_dropout,
         task_type="CAUSAL_LM",
@@ -50,7 +47,7 @@ def train_lora(
         bf16=True,
         logging_steps=20,
         output_dir="outputs",
-        optim="paged_adamw_8bit",
+        optim="paged_adamw_32bit",
         remove_unused_columns=False,
         num_train_epochs=training_args.num_train_epochs,
         max_seq_length=context_length,
