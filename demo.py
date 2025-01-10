@@ -34,7 +34,7 @@ def train_lora(
         #     "up_proj",
         #     "down_proj",
         # ],
-        target_modules=["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
+        target_modules="all-linear",
         lora_alpha=training_args.lora_alpha,
         lora_dropout=training_args.lora_dropout,
         task_type="CAUSAL_LM",
@@ -53,15 +53,16 @@ def train_lora(
         per_device_train_batch_size=training_args.per_device_train_batch_size,
         gradient_accumulation_steps=training_args.gradient_accumulation_steps,
         warmup_steps=100,
-        learning_rate=2e-4,
+        learning_rate=1e-4,
         bf16=True,
         fp16=False,
         logging_steps=20,
         output_dir="outputs",
-        optim="paged_adamw_8bit",
+        optim="paged_adamw_32bit",
         remove_unused_columns=False,
         num_train_epochs=training_args.num_train_epochs,
         max_seq_length=context_length,
+        lr_scheduler_type="linear"
     )
 
     # 加载 tokenizer
