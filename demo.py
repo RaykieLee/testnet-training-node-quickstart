@@ -78,7 +78,7 @@ def train_lora(
     model = AutoModelForCausalLM.from_pretrained(
         model_id,
         quantization_config=bnb_config,
-        # device_map={"": 0},
+        device_map=None,
         token=os.environ.get("HF_TOKEN"),
         trust_remote_code=True,
         torch_dtype=torch.float16,
