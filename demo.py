@@ -44,7 +44,7 @@ def train_lora(
     bnb_config = BitsAndBytesConfig(
         load_in_4bit=True,
         bnb_4bit_quant_type="nf4",
-        bnb_4bit_compute_dtype=torch.bfloat16,
+        bnb_4bit_compute_dtype=torch.float16,
         bnb_4bit_use_double_quant=False,
     )
 
@@ -54,8 +54,8 @@ def train_lora(
         gradient_accumulation_steps=training_args.gradient_accumulation_steps,
         warmup_steps=100,
         learning_rate=1e-4,
-        bf16=True,
-        fp16=False,
+        bf16=False,
+        fp16=True,
         logging_steps=20,
         output_dir="outputs",
         optim="paged_adamw_32bit",
@@ -81,7 +81,7 @@ def train_lora(
         device_map={"": 0},
         token=os.environ.get("HF_TOKEN"),
         trust_remote_code=True,
-        torch_dtype=torch.bfloat16,
+        torch_dtype=torch.float16,
         attn_implementation="flash_attention_2",
     )
 
