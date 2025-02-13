@@ -49,7 +49,7 @@ def train_lora(
         per_device_train_batch_size=training_args.per_device_train_batch_size,
         gradient_accumulation_steps=training_args.gradient_accumulation_steps,
         warmup_steps=100,
-        learning_rate=5.0e-06,
+        learning_rate=2e-4,
         bf16=True,
         logging_steps=20,
         output_dir="outputs",
@@ -59,7 +59,7 @@ def train_lora(
         max_seq_length=context_length,
         gradient_checkpointing=True,  # 启用梯度检查点
         group_by_length=True,
-        max_grad_norm=1.0,
+        max_grad_norm=0.3,
         neftune_noise_alpha=5,
     )
     tokenizer = AutoTokenizer.from_pretrained(
