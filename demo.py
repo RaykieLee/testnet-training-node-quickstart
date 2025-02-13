@@ -60,6 +60,7 @@ def train_lora(
         gradient_checkpointing=True,  # 启用梯度检查点
         group_by_length=True,
         max_grad_norm=1.0,
+        neftune_noise_alpha=5,
     )
     tokenizer = AutoTokenizer.from_pretrained(
         model_id,
